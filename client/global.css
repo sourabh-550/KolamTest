@@ -1,0 +1,511 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 38 15% 96%;
+    --foreground: 38 15% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 38 15% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 38 15% 8%;
+
+    --primary: 38 85% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 15% 90%;
+    --secondary-foreground: 38 15% 8%;
+
+    --muted: 38 10% 88%;
+    --muted-foreground: 38 15% 45%;
+
+    --accent: 38 85% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 38 15% 85%;
+    --input: 38 10% 92%;
+    --ring: 38 85% 45%;
+
+    --radius: 0.375rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 224 11% 7%;
+    --foreground: 213 31% 91%;
+
+    --card: 224 11% 7%;
+    --card-foreground: 213 31% 91%;
+
+    --popover: 224 11% 7%;
+    --popover-foreground: 213 31% 91%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 224 11% 7%;
+
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 213 31% 91%;
+
+    --muted: 215 25% 15%;
+    --muted-foreground: 217 10% 65%;
+
+    --accent: 215 25% 15%;
+    --accent-foreground: 213 31% 91%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 25% 15%;
+    --input: 215 25% 15%;
+    --ring: 217 91% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    letter-spacing: -0.005em;
+    font-weight: 400;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  /* Professional focus styles */
+  .focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Professional button hover states */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground shadow-sm transition-all duration-200;
+  }
+
+  .btn-primary:hover {
+    @apply bg-primary/90 shadow-md;
+  }
+
+  /* Smooth scrolling for professional feel */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Professional selection styling */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Subtle Kolam-inspired patterns */
+  .kolam-pattern {
+    background-image: radial-gradient(circle at 2px 2px, rgba(217, 119, 6, 0.15) 1px, transparent 0);
+    background-size: 16px 16px;
+  }
+
+  .kolam-border {
+    border-image: linear-gradient(45deg, transparent 25%, rgba(217, 119, 6, 0.3) 25%, rgba(217, 119, 6, 0.3) 75%, transparent 75%) 1;
+  }
+
+  .kolam-accent {
+    color: hsl(38, 85%, 45%);
+  }
+
+  .kolam-card {
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.1), 0 1px 2px rgba(217, 119, 6, 0.06);
+    border: 1px solid rgba(217, 119, 6, 0.2);
+  }
+
+  .kolam-grid {
+    background-image:
+      linear-gradient(rgba(217, 119, 6, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(217, 119, 6, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Enhanced hover effects and transitions */
+  .hover-lift {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .hover-scale {
+    transition: transform 0.2s ease-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.3s ease-out;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+  }
+
+  /* Smooth button transitions */
+  .btn-transition {
+    transition: all 0.2s ease-out;
+  }
+
+  /* Navigation hover effects */
+  .nav-item {
+    position: relative;
+    transition: all 0.2s ease-out;
+  }
+
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: hsl(var(--primary));
+    transition: all 0.3s ease-out;
+    transform: translateX(-50%);
+  }
+
+  .nav-item:hover::after {
+    width: 80%;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    transition: all 0.3s ease-out;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Image hover effects */
+  .image-hover {
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+  }
+
+  .image-hover:hover {
+    transform: scale(1.05);
+  }
+
+  /* Text hover effects */
+  .text-hover {
+    transition: color 0.2s ease-out;
+  }
+
+  .text-hover:hover {
+    color: hsl(var(--primary));
+  }
+
+  /* Enhanced Kolam-inspired animations */
+  .kolam-draw {
+    animation: kolam-draw-in 2s ease-in-out;
+  }
+
+  .kolam-pulse {
+    animation: kolam-pulse 3s ease-in-out infinite;
+  }
+
+  .kolam-float {
+    animation: kolam-float 6s ease-in-out infinite;
+  }
+
+  .kolam-rotate {
+    animation: kolam-rotate 20s linear infinite;
+  }
+
+  @keyframes kolam-draw-in {
+    0% {
+      stroke-dasharray: 0 100;
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dasharray: 100 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes kolam-pulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes kolam-float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes kolam-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Performance optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Smooth page transitions */
+  .page-transition {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Enhanced focus styles for accessibility */
+  .focus-kolam:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 4px;
+    box-shadow: 0 0 0 4px hsla(var(--primary), 0.2);
+  }
+
+  /* Interactive elements enhancement */
+  .interactive {
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    transform-origin: center;
+  }
+
+  .interactive:hover {
+    transform: scale(1.02);
+  }
+
+  .interactive:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Kolam pattern variations */
+  .kolam-pattern-dense {
+    background-image: radial-gradient(circle at 1px 1px, rgba(217, 119, 6, 0.2) 1px, transparent 0);
+    background-size: 12px 12px;
+  }
+
+  .kolam-pattern-sparse {
+    background-image: radial-gradient(circle at 2px 2px, rgba(217, 119, 6, 0.1) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  /* Loading state styles */
+  .loading-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Smooth reveal animations */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+
+  .reveal-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.5s ease-out;
+  }
+
+  .reveal-scale.in-view {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Enhanced scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--secondary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.6);
+    border-radius: 4px;
+    transition: background 0.2s ease-out;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+
+  /* Dark mode specific enhancements */
+  .dark .kolam-pattern {
+    background-image: radial-gradient(circle at 2px 2px, rgba(217, 119, 6, 0.08) 1px, transparent 0);
+  }
+
+  .dark .kolam-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(217, 119, 6, 0.15);
+  }
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .kolam-accent {
+      color: hsl(38, 100%, 35%);
+      font-weight: 600;
+    }
+
+    .kolam-card {
+      border: 2px solid hsl(var(--primary));
+    }
+  }
+
+  /* SVG text rendering improvements */
+  svg text {
+    text-rendering: optimizeLegibility;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ensure crisp SVG rendering */
+  svg {
+    shape-rendering: geometricPrecision;
+  }
+
+  /* Mathematical visualization specific improvements */
+  .mathematical-svg text {
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+    paint-order: stroke fill;
+    stroke: rgba(255, 255, 255, 0.8);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+}
