@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+// ...existing code...
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, BookOpen, Grid3X3, Search, Wand2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,12 +8,13 @@ import KolamSlideshow from "@/components/KolamSlideshow";
 
 export default function Home() {
   const navigate = useNavigate();
+// ...existing code...
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <KolamBackground animated={true} />
       
-      {/* Hero Section - Two Column Layout */}
+  {/* Hero Section - Two Column Layout */}
       <section className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -43,6 +45,7 @@ export default function Home() {
               </div>
 
               {/* Quick Access Buttons */}
+// ...existing code...
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 <Button
                   onClick={() => navigate("/analyse")}
