@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Grid3X3 } from "lucide-react";
@@ -7,6 +8,43 @@ import KolamBackground from "@/components/KolamBackground";
 import KolamAnimationDemo from "@/components/KolamAnimationDemo";
 
 export default function Gallery() {
+  // State for search input and kolam image
+  const [search, setSearch] = useState("");
+  const [kolamUrl, setKolamUrl] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Parse input like "5x5 sikku" or "7x7 weave"
+  function parseInput(input: string) {
+    let rows = 5, cols = 5, rule = "sikku_like";
+    const gridMatch = input.match(/(\d+)[xX×](\d+)/);
+    if (gridMatch) {
+      rows = parseInt(gridMatch[1]);
+      cols = parseInt(gridMatch[2]);
+    } else {
+      const singleMatch = input.match(/(\d+)/);
+      if (singleMatch) rows = cols = parseInt(singleMatch[1]);
+    }
+    if (/sikku/i.test(input)) rule = "sikku_like";
+    else if (/weave/i.test(input)) rule = "weave";
+    else if (/loop|2x2/i.test(input)) rule = "2x2_loops";
+    return { rows, cols, rule };
+  }
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setKolamUrl("");
+    setLoading(true);
+    try {
+      const { rows, cols, rule } = parseInput(search);
+      const apiUrl = `http://localhost:8000/generate_kolam?rows=${rows}&cols=${cols}&rule=${rule}&show_dots=true`;
+      setKolamUrl(apiUrl);
+    } catch (err) {
+      setError("Failed to generate kolam.");
+    }
+    setLoading(false);
+  };
   const galleryImages = [
     { id: 1, title: "Traditional Pongal Kolam", type: "Festival", difficulty: "Intermediate", description: "Elaborate harvest festival design with rice and sugarcane motifs" },
     { id: 2, title: "Lotus Sikku Kolam", type: "Floral", difficulty: "Advanced", description: "Continuous line pattern forming lotus petals with spiritual symbolism" },
@@ -40,8 +78,10 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <KolamBackground animated={false} />
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6 text-foreground">
@@ -52,6 +92,8 @@ export default function Gallery() {
             and discover the beauty of this ancient geometric art form.
           </p>
         </div>
+
+
 
         {/* Digital Archive Generator */}
         <section className="mb-20">

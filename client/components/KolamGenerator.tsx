@@ -12,17 +12,35 @@ export default function KolamGenerator() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
+  // Parse input like "5-dot sikku", "7x7 weave", etc.
+  function parseInput(input: string) {
+    let rows = 5, cols = 5, rule = "sikku_like";
+    const gridMatch = input.match(/(\d+)[xX×](\d+)/);
+    if (gridMatch) {
+      rows = parseInt(gridMatch[1]);
+      cols = parseInt(gridMatch[2]);
+    } else {
+      const singleMatch = input.match(/(\d+)/);
+      if (singleMatch) rows = cols = parseInt(singleMatch[1]);
+    }
+    if (/sikku/i.test(input)) rule = "sikku_like";
+    else if (/weave/i.test(input)) rule = "weave";
+    else if (/loop|2x2/i.test(input)) rule = "2x2_loops";
+    return { rows, cols, rule };
+  }
+
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
-    
     setIsGenerating(true);
-    
-    // Simulate AI generation
-    setTimeout(() => {
-      // For now, show a placeholder generated kolam
-      setGeneratedImage("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJrbGFtIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAiIHkxPSIwIiB4Mj0iNDAwIiB5Mj0iNDAwIj48c3RvcCBzdG9wLWNvbG9yPSIjYTg1NWY3Ii8+PHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiNlYzQ4OTkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmNTllMGIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzBmMTcyYSIvPjxnIGZpbGw9InVybCgja2xhbSkiIG9wYWNpdHk9IjAuOCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjUwIiByPSIzIi8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSI1MCIgcj0iMyIvPjxjaXJjbGUgY3g9IjI1MCIgY3k9IjUwIiByPSIzIi8+PGNpcmNsZSBjeD0iMzAwIiBjeT0iNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIzNTAiIGN5PSI1MCIgcj0iMyIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMjUwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iMzUwIiBjeT0iMTAwIiByPSIzIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIyNTAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIxNTAiIHI9IjMiLz48Y2lyY2xlIGN4PSIzNTAiIGN5PSIxNTAiIHI9IjMiLz48cGF0aCBkPSJNNTAgMTAwUTEwMCA1MCAyMDAgMTAwUTMwMCAxNTAgMzUwIDEwMCIgc3Ryb2tlPSJ1cmwoI2tsYW0pIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMTAwIDUwUTIwMCAxMDAgMzAwIDUwIiBzdHJva2U9InVybCgja2xhbSkiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0xNTAgMTAwUTIwMCAxNTAgMjUwIDEwMCIgc3Ryb2tlPSJ1cmwoI2tsYW0pIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L2c+PC9zdmc+");
-      setIsGenerating(false);
-    }, 3000);
+    setGeneratedImage(null);
+    try {
+      const { rows, cols, rule } = parseInput(prompt);
+      const apiUrl = `http://localhost:8000/generate_kolam?rows=${rows}&cols=${cols}&rule=${rule}&show_dots=true`;
+      setGeneratedImage(apiUrl);
+    } catch (err) {
+      setGeneratedImage(null);
+    }
+    setIsGenerating(false);
   };
 
   const samplePrompts = [
