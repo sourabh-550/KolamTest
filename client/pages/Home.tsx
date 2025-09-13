@@ -45,7 +45,6 @@ export default function Home() {
               </div>
 
               {/* Quick Access Buttons */}
-// ...existing code...
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 <Button
                   onClick={() => navigate("/analyse")}
@@ -76,11 +75,10 @@ export default function Home() {
                   <Sparkles className="h-5 w-5 mr-2" />
                   Explore Digital Archive
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
+                <Button
                   onClick={() => navigate("/kolam")}
-                  className="text-lg px-8 py-3 h-auto"
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-lg px-8 py-3 h-auto"
                 >
                   <BookOpen className="h-5 w-5 mr-2" />
                   Learn About Kolam
